@@ -1,4 +1,5 @@
-from typing import Any, Union
+from typing import Any
+
 from playwright.sync_api import Locator, Page
 
 
@@ -13,7 +14,7 @@ class EditInvoicePage:
 	def fill_service_month(self, date: str) -> None:
 		self.page.get_by_role("textbox", name="Service Month").fill(date)
 
-	def fill_amount(self, invoice_amount: Union[int, float]) -> None:
+	def fill_amount(self, invoice_amount: int | float) -> None:
 		self.page.get_by_role("spinbutton", name="Amount").fill(str(invoice_amount))
 
 	def fill_issue_date(self, date: str) -> None:
@@ -32,12 +33,12 @@ class EditInvoicePage:
 		if locator.is_visible():
 			locator.fill(awb)
 
-	def fill_kg(self, weight: Union[int, float]) -> None:
+	def fill_kg(self, weight: int | float) -> None:
 		locator = self.page.get_by_placeholder("KG")
 		if locator.is_visible():
 			locator.fill(str(weight))
 
-	def fill_items(self, items: Union[int, None]) -> None:
+	def fill_items(self, items: int | None) -> None:
 		locator = self.page.get_by_role("textbox", name="Items")
 		if locator.is_visible():
 			if items is None:

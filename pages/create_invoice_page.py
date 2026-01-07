@@ -1,4 +1,5 @@
 from typing import Any, Union
+
 from playwright.sync_api import Locator, Page, Response
 
 
