@@ -1,6 +1,6 @@
-from typing import Any, Union
-
 from playwright.sync_api import Locator, Page, Response
+from models import AirWaybill, Invoice
+from typing import Union
 
 
 class CreateInvoicePage:
@@ -57,9 +57,6 @@ class CreateInvoicePage:
 			self.page.get_by_placeholder("0").fill(air_waybill_weight)
 			self.page.get_by_role("button", name="Done (1 AWBs)").click()
 
-	def fill_comment(self, comment: str) -> None:
-		self.page.get_by_role("textbox", name="Comment").fill(comment)
-
 	def fill_items(self, items: Union[int, float]) -> None:
 		locator = self.page.get_by_placeholder("Items")
 		if locator.is_visible():
@@ -67,26 +64,23 @@ class CreateInvoicePage:
 				raise ValueError("Items is None")
 			locator.fill(items)
 
+	def fill_comment(self, comment: str) -> None:
+		self.page.get_by_role("textbox", name="Comment").fill(comment)
+
 	def click_submit_btn(self) -> None:
 		self.page.get_by_role("button", name="Submit").click()
 
-	def fill_invoice_form(self, invoice: Any, service: str) -> None:
-		self.fill_invoice_number(invoice["number"])
-		self.fill_issue_date(invoice["issue_date"])
-		self.fill_service_month(invoice["service_month"])
-		self.fill_amount(invoice["unit_price"])
-
-		receipt = invoice["receipt"]
-		receipt_path = receipt if isinstance(receipt, str) else receipt["filename"]
-		self.set_attachment_file(receipt_path)
-
+	def fill_invoice_form(self, invoice: Invoice, service: str, air_waybill: AirWaybill) -> None:
+		self.fill_invoice_number(invoice.number)
+		self.fill_issue_date(invoice.issue_date)
+		self.fill_service_month(invoice.service_month)
+		self.fill_amount(invoice.amount)
+		self.set_attachment_file(invoice.attachment)
 		self.select_service_by_label(service)
-
-		details = invoice["details"]
-		details_path = details if isinstance(details, str) else details["filename"]
-		self.set_details_file(details_path)
-
-		self.fill_awb(invoice["awb"])
-		self.fill_kg(invoice["kg"])
-		self.fill_items(invoice.get("items"))
+		self.fill_air_waybills_form(
+			air_waybill.code, air_waybill.destination_country, air_waybill.weight
+		)
+		self.set_details_file(invoice.details)
+		self.fill_items(invoice.items)
+		self.fill_comment(invoice.comment)
 		self.click_submit_btn()
