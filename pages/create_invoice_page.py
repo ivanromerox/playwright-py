@@ -1,6 +1,6 @@
 from playwright.sync_api import Locator, Page, Response
+
 from models import AirWaybill, Invoice
-from typing import Union
 
 
 class CreateInvoicePage:
@@ -25,7 +25,7 @@ class CreateInvoicePage:
 	def fill_service_month(self, date: str) -> None:
 		self.page.get_by_placeholder("Service month").fill(date)
 
-	def fill_amount(self, invoice_amount: Union[int, float]) -> None:
+	def fill_amount(self, invoice_amount: int | float) -> None:
 		self.page.get_by_placeholder("Amount").fill(str(invoice_amount))
 
 	def select_service_by_label(self, service: str) -> None:
@@ -57,7 +57,7 @@ class CreateInvoicePage:
 			self.page.get_by_placeholder("0").fill(air_waybill_weight)
 			self.page.get_by_role("button", name="Done (1 AWBs)").click()
 
-	def fill_items(self, items: Union[int, float]) -> None:
+	def fill_items(self, items: int | float) -> None:
 		locator = self.page.get_by_placeholder("Items")
 		if locator.is_visible():
 			if items is None:

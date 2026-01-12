@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import List, Optional, Union
+from typing import list
 
 
 @dataclass
 class AirWaybill:
 	code: str
 	destination: str
-	weight: Union[int, float]
+	weight: int | float
 
 
 @dataclass
@@ -14,11 +14,11 @@ class Invoice:
 	number: str
 	issue_date: str
 	service_month: str
-	amount: Union[int, float]
+	amount: int | float
 	attachment: str
-	details: Optional[str]
-	air_waybills: Optional[List[AirWaybill]]
-	items: Optional[int]
+	details: str | None
+	air_waybills: list[AirWaybill] | None
+	items: int | None
 	comment: str
 
 

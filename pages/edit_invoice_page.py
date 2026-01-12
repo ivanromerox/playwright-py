@@ -1,4 +1,5 @@
 from playwright.sync_api import Locator, Page
+
 from models import AirWaybill, Invoice
 
 

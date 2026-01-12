@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from faker import Faker
+
 from models import AirWaybill, Invoice
 
 fake = Faker()
