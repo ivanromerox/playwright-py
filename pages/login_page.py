@@ -13,7 +13,7 @@ class LoginPage:
 		return self.page.goto("login")
 
 	def login(self, email: str, password: str) -> None:
-		self.page.get_by_role("textbox", name="Email").fill(email)
+		self.page.get_by_role("textbox", name="Nickname").fill(email)
 		self.page.get_by_role("textbox", name="Password").fill(password)
 		self.page.get_by_role("button", name="Login").click()
 
