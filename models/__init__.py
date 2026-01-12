@@ -20,3 +20,9 @@ class Invoice:
 	air_waybills: Optional[List[AirWaybill]]
 	items: Optional[int]
 	comment: str
+
+
+@dataclass
+class InvoiceFile:
+	file_path: str
+	invoice: Invoice
